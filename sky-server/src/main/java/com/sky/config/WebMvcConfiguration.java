@@ -73,7 +73,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     /*
     * 拓展spring mvc的消息转化器
-    * 统一后端传给前端的格式
+    * 统一后端传给前端的格式))
     * */
     protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
 
