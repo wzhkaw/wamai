@@ -2,6 +2,7 @@
 .idea
 *.iml
 *.class
+*.yml
 application-dev.yml
 *Test.java
 **/test/
