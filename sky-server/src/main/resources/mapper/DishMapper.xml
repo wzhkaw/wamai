@@ -26,4 +26,12 @@
         </where>
     </select>
 
+    <!--根据菜品id集合批量删除菜品表中的菜品数据-->
+    <delete id="deleteByIds">
+        delete from sky_take_out.dish where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
 </mapper>
