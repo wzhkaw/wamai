@@ -84,11 +84,29 @@ public class ShoppingCartImpl implements ShoppingCartService {
             shoppingCartMapper.insert(shoppingCart);
         }
 
+    }
 
+    /*
+    * 查看购物车
+    * */
+    public List<ShoppingCart> showShoppingCart() {
 
+        Long userId = BaseContext.getCurrentId();
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUserId(userId);
+        List<ShoppingCart> list = shoppingCartMapper.list(shoppingCart);
+        return list;
 
     }
 
+    /*
+    * 清空购物车
+    * */
+    public void cleanShoppingCart() {
+        Long userId = BaseContext.getCurrentId();
+        shoppingCartMapper.deleteByUserId(userId);
+
+    }
 
 
 }
