@@ -43,6 +43,7 @@
         order by order_time desc
     </select>
 
+
     <!-- 修改订单-->
     <update id="update">
         update orders
@@ -53,5 +54,21 @@
         </set>
         where id =#{id}
     </update>
-    
+
+    <!-- 根据动态条件计算营业额-->
+    <select id="sumByMap" resultType="java.lang.Double">
+        select sum(amount) from sky_take_out.orders
+        <where>
+            <if test="begin != nnull">
+                and order_time &gt; #{begin}
+            </if>
+            <if test="end != nnull">
+                and order_time &lt; #{end}
+            </if>
+            <if test="status != nnull">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
 </mapper>
