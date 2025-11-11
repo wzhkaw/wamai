@@ -59,13 +59,29 @@
     <select id="sumByMap" resultType="java.lang.Double">
         select sum(amount) from sky_take_out.orders
         <where>
-            <if test="begin != nnull">
+            <if test="begin != null">
                 and order_time &gt; #{begin}
             </if>
-            <if test="end != nnull">
+            <if test="end != null">
                 and order_time &lt; #{end}
             </if>
-            <if test="status != nnull">
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据动态条件查找订单数-->
+    <select id="countOrderByMap" resultType="java.lang.Integer">
+        select count(id) from sky_take_out.orders
+        <where>
+            <if test="begin != null">
+                and order_time &gt; #{begin}
+            </if>
+            <if test="end != null">
+                and order_time &lt; #{end}
+            </if>
+            <if test="status != null">
                 and status = #{status}
             </if>
         </where>
