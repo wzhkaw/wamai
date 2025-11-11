@@ -1,11 +1,13 @@
 package com.sky.service.impl;
 
+import com.sky.dto.GoodsSalesDTO;
 import com.sky.entity.Orders;
 import com.sky.mapper.OrderMapper;
 import com.sky.mapper.ReportMapper;
 import com.sky.mapper.UserMapper;
 import com.sky.service.ReportService;
 import com.sky.vo.OrderReportVO;
+import com.sky.vo.SalesTop10ReportVO;
 import com.sky.vo.TurnoverReportVO;
 import com.sky.vo.UserReportVO;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import static com.alibaba.fastjson.util.JavaBeanInfo.build;
 
 @Service
 @Slf4j
@@ -151,6 +156,31 @@ public class ReportServiceImpl implements ReportService {
                 .orderCompletionRate(orderComppletionRate)
                 .totalOrderCount(totalOrderCount)
                 .validOrderCount(validOrderCount)
+                .build();
+    }
+
+    /*
+    * 统计指定时间区间销量排行top10
+    * */
+    public SalesTop10ReportVO getSalesTop10(LocalDate begin, LocalDate end) {
+
+        //转换localdate对象为localdatetime对象
+        LocalDateTime beginTime = LocalDateTime.of(begin, LocalTime.MIN);
+        LocalDateTime endTime = LocalDateTime.of(end, LocalTime.MAX);
+
+        //得到top10的数据：菜名和数量
+        List<GoodsSalesDTO> salesTop10 = orderMapper.getSalesTop(beginTime,endTime);
+        //取出菜名并用，分隔
+        List<String> names = salesTop10.stream().map(GoodsSalesDTO::getName).collect(Collectors.toList());
+        String nameList = StringUtils.join(names, ",");
+        //取出数量并用，分隔
+        List<Integer> numbers = salesTop10.stream().map(GoodsSalesDTO::getNumber).collect(Collectors.toList());
+        String numberList = StringUtils.join(numbers, ",");
+
+        //返回VO对象
+        return SalesTop10ReportVO.builder()
+                .nameList(nameList)
+                .numberList(numberList)
                 .build();
     }
 
