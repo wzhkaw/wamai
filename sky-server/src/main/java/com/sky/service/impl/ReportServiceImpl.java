@@ -3,7 +3,6 @@ package com.sky.service.impl;
 import com.sky.dto.GoodsSalesDTO;
 import com.sky.entity.Orders;
 import com.sky.mapper.OrderMapper;
-import com.sky.mapper.ReportMapper;
 import com.sky.mapper.UserMapper;
 import com.sky.service.ReportService;
 import com.sky.vo.OrderReportVO;
@@ -30,8 +29,6 @@ import static com.alibaba.fastjson.util.JavaBeanInfo.build;
 @Slf4j
 public class ReportServiceImpl implements ReportService {
 
-    @Autowired
-    private ReportMapper reportMapper;
     @Autowired
     private OrderMapper orderMapper;
     @Autowired
@@ -133,10 +130,10 @@ public class ReportServiceImpl implements ReportService {
             map.put("end", endTime);
 
             //select count(id) from orders where order_time > begin and order_time < end
-            Integer orderCount = orderMapper.countOrderByMap(map);//每日订单数
+            Integer orderCount = orderMapper.countByMap(map);//每日订单数
             map.put("status", Orders.COMPLETED);//订单状态为已完成
             //select count(id) from orders where order_time > begin and order_time < end and status = 5 //已完成
-            Integer validOrderCount = orderMapper.countOrderByMap(map);//每日有效订单数
+            Integer validOrderCount = orderMapper.countByMap(map);//每日有效订单数
 
             orderCountList.add(orderCount);
             validOrderCountList.add(validOrderCount);

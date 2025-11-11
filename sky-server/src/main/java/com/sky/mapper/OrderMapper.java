@@ -45,10 +45,11 @@ public interface OrderMapper {
     /*
      * 根据动态条件统计订单数
      * */
-    Integer countOrderByMap(Map map);
+    Integer countByMap(Map map);
 
     /*
     * 根据指定时间区间统计销量排名前10
     * */
     List<GoodsSalesDTO> getSalesTop(LocalDateTime begin, LocalDateTime end);
+
 }

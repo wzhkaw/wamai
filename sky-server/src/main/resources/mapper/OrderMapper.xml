@@ -72,7 +72,7 @@
     </select>
 
     <!-- 根据动态条件查找订单数-->
-    <select id="countOrderByMap" resultType="java.lang.Integer">
+    <select id="countByMap" resultType="java.lang.Integer">
         select count(id) from sky_take_out.orders
         <where>
             <if test="begin != null">
